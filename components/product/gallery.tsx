@@ -1,4 +1,6 @@
-// 'use client';
+'use client';
+
+import { useState } from 'react';
 
 import clsx from 'clsx';
 import { GridTileImage } from 'components/grid/tile';
@@ -15,15 +17,15 @@ export function Gallery({
   currencyCode: string;
   images: { src: string; altText: string }[];
 }) {
-  // const [currentImage, setCurrentImage] = useState(0);
+  const [currentImage, setCurrentImage] = useState(0);
 
-  // function handleNavigate(direction: 'next' | 'previous') {
-  //   if (direction === 'next') {
-  //     setCurrentImage(currentImage + 1 < images.length ? currentImage + 1 : 0);
-  //   } else {
-  //     setCurrentImage(currentImage === 0 ? images.length - 1 : currentImage - 1);
-  //   }
-  // }
+  function handleNavigate(direction: 'next' | 'previous') {
+    if (direction === 'next') {
+      setCurrentImage(currentImage + 1 < images.length ? currentImage + 1 : 0);
+    } else {
+      setCurrentImage(currentImage === 0 ? images.length - 1 : currentImage - 1);
+    }
+  }
 
   const buttonClassName =
     'px-9 cursor-pointer ease-in-and-out duration-200 transition-bg bg-[#7928ca] hover:bg-violetDark';
@@ -31,13 +33,10 @@ export function Gallery({
   return (
     <div className="h-full">
       <div className="relative h-full max-h-[600px] overflow-hidden">
-        {/* {images[currentImage] && ( */}
-        {images[0] && (
+        {images[currentImage] && (
           <GridTileImage
-            // src={images[currentImage]?.src as string}
-            // alt={images[currentImage]?.altText as string}
-            src={images[0]?.src as string}
-            alt={images[0]?.altText as string}
+            src={images[currentImage]?.src as string}
+            alt={images[currentImage]?.altText as string}
             width={600}
             height={600}
             isInteractive={false}
@@ -56,14 +55,14 @@ export function Gallery({
             <button
               aria-label="Previous product image"
               className={clsx(buttonClassName, 'border-r border-white dark:border-black')}
-              // onClick={() => handleNavigate('previous')}
+              onClick={() => handleNavigate('previous')}
             >
               <ArrowLeftIcon className="h-6" />
             </button>
             <button
               aria-label="Next product image"
               className={clsx(buttonClassName)}
-              // onClick={() => handleNavigate('next')}
+              onClick={() => handleNavigate('next')}
             >
               <ArrowLeftIcon className="h-6 rotate-180" />
             </button>
@@ -74,14 +73,13 @@ export function Gallery({
       {images.length > 1 ? (
         <div className="flex">
           {images.map((image, index) => {
-            // const isActive = index === currentImage;
-            const isActive = index === 0;
+            const isActive = index === currentImage;
             return (
               <button
                 aria-label="Enlarge product image"
                 key={image.src}
                 className="h-full w-1/4"
-                // onClick={() => setCurrentImage(index)}
+                onClick={() => setCurrentImage(index)}
               >
                 <GridTileImage
                   alt={image?.altText}

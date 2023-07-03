@@ -11,10 +11,10 @@ export const metadata = {
   description: 'Search for products in the store.'
 };
 
-// export async function getStaticProps() {
-//   const posts = await getAllFilesFrontMatter('blog');
-//   console.log('🚀 ~ file: page.tsx:20 ~ posts:', posts);
-// }
+export async function getStaticProps() {
+  const posts = await getAllFilesFrontMatter('blog');
+  console.log('🚀 ~ file: page.tsx:20 ~ posts:', posts);
+}
 
 export default async function SearchPage({
   searchParams
@@ -22,8 +22,6 @@ export default async function SearchPage({
   searchParams?: { [key: string]: string | string[] | undefined };
 }) {
   console.log('\n', '\n', '--------------------------', '\n', '\n');
-  const posts = await getAllFilesFrontMatter('blog');
-  console.log('🚀 ~ file: page.tsx:20 ~ posts:', posts);
 
   const { sort, q: searchValue } = searchParams as { [key: string]: string };
   const { sortKey, reverse } = sorting.find((item) => item.slug === sort) || defaultSort;
