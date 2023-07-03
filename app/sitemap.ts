@@ -1,5 +1,9 @@
-import { getCollections, getPages, getProducts } from 'lib/shopify';
 import { MetadataRoute } from 'next';
+
+async function getEmptyArray() {
+  const emptyArray = await Promise.resolve([]);
+  return emptyArray;
+}
 
 const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
   ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
@@ -11,26 +15,31 @@ export default async function sitemap(): Promise<Promise<Promise<MetadataRoute.S
     lastModified: new Date().toISOString()
   }));
 
-  const collectionsPromise = getCollections().then((collections) =>
-    collections.map((collection) => ({
-      url: `${baseUrl}${collection.path}`,
-      lastModified: collection.updatedAt
-    }))
-  );
+  // const collectionsPromise = getCollections().then((collections) =>
+  //   collections.map((collection) => ({
+  //     url: `${baseUrl}${collection.path}`,
+  //     lastModified: collection.updatedAt
+  //   }))
+  // );
 
-  const productsPromise = getProducts({}).then((products) =>
-    products.map((product) => ({
-      url: `${baseUrl}/product/${product.handle}`,
-      lastModified: product.updatedAt
-    }))
-  );
+  const collectionsPromise = getEmptyArray();
 
-  const pagesPromise = getPages().then((pages) =>
-    pages.map((page) => ({
-      url: `${baseUrl}/${page.handle}`,
-      lastModified: page.updatedAt
-    }))
-  );
+  // const productsPromise = getProducts({}).then((products) =>
+  //   products.map((product) => ({
+  //     url: `${baseUrl}/product/${product.handle}`,
+  //     lastModified: product.updatedAt
+  //   }))
+  // );
+
+  const productsPromise = getEmptyArray();
+
+  // const pagesPromise = getPages().then((pages) =>
+  //   pages.map((page) => ({
+  //     url: `${baseUrl}/${page.handle}`,
+  //     lastModified: page.updatedAt
+  //   }))
+  // );
+  const pagesPromise = getEmptyArray();
 
   const fetchedRoutes = (
     await Promise.all([collectionsPromise, productsPromise, pagesPromise])

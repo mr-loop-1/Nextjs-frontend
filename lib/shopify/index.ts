@@ -287,49 +287,57 @@ export async function getCollectionProducts({
   return reshapeProducts(removeEdgesAndNodes(res.body.data.collection.products));
 }
 
-export async function getCollections(): Promise<Collection[]> {
-  const res = await shopifyFetch<ShopifyCollectionsOperation>({
-    query: getCollectionsQuery,
-    tags: [TAGS.collections]
-  });
-  const shopifyCollections = removeEdgesAndNodes(res.body?.data?.collections);
-  const collections = [
-    {
-      handle: '',
-      title: 'All',
-      description: 'All products',
-      seo: {
-        title: 'All',
-        description: 'All products'
-      },
-      path: '/search',
-      updatedAt: new Date().toISOString()
-    },
-    // Filter out the `hidden` collections.
-    // Collections that start with `hidden-*` need to be hidden on the search page.
-    ...reshapeCollections(shopifyCollections).filter(
-      (collection) => !collection.handle.startsWith('hidden')
-    )
-  ];
+// export async function getCollections(): Promise<Collection[]> {
+//   const res = await shopifyFetch<ShopifyCollectionsOperation>({
+//     query: getCollectionsQuery,
+//     tags: [TAGS.collections]
+//   });
+//   const shopifyCollections = removeEdgesAndNodes(res.body?.data?.collections);
+//   const collections = [
+//     {
+//       handle: '',
+//       title: 'All',
+//       description: 'All products',
+//       seo: {
+//         title: 'All',
+//         description: 'All products'
+//       },
+//       path: '/search',
+//       updatedAt: new Date().toISOString()
+//     },
+//     // Filter out the `hidden` collections.
+//     // Collections that start with `hidden-*` need to be hidden on the search page.
+//     ...reshapeCollections(shopifyCollections).filter(
+//       (collection) => !collection.handle.startsWith('hidden')
+//     )
+//   ];
 
-  return collections;
+//   return collections;
+// }
+
+export async function getCollections(): Promise<Collection[]> {
+  return getEmptyArray();
 }
 
-export async function getMenu(handle: string): Promise<Menu[]> {
-  const res = await shopifyFetch<ShopifyMenuOperation>({
-    query: getMenuQuery,
-    tags: [TAGS.collections],
-    variables: {
-      handle
-    }
-  });
+// export async function getMenu(handle: string): Promise<Menu[]> {
+//   const res = await shopifyFetch<ShopifyMenuOperation>({
+//     query: getMenuQuery,
+//     tags: [TAGS.collections],
+//     variables: {
+//       handle
+//     }
+//   });
 
-  return (
-    res.body?.data?.menu?.items.map((item: { title: string; url: string }) => ({
-      title: item.title,
-      path: item.url.replace(domain, '').replace('/collections', '/search').replace('/pages', '')
-    })) || []
-  );
+//   return (
+//     res.body?.data?.menu?.items.map((item: { title: string; url: string }) => ({
+//       title: item.title,
+//       path: item.url.replace(domain, '').replace('/collections', '/search').replace('/pages', '')
+//     })) || []
+//   );
+// }
+
+export async function getMenu(handle: string): Promise<Menu[]> {
+  return getEmptyArray();
 }
 
 export async function getPage(handle: string): Promise<Page> {
@@ -373,6 +381,33 @@ export async function getProductRecommendations(productId: string): Promise<Prod
   return reshapeProducts(res.body.data.productRecommendations);
 }
 
+// export async function getProducts({
+//   query,
+//   reverse,
+//   sortKey
+// }: {
+//   query?: string;
+//   reverse?: boolean;
+//   sortKey?: string;
+// }): Promise<Product[]> {
+//   const res = await shopifyFetch<ShopifyProductsOperation>({
+//     query: getProductsQuery,
+//     tags: [TAGS.products],
+//     variables: {
+//       query,
+//       reverse,
+//       sortKey
+//     }
+//   });
+
+//   return reshapeProducts(removeEdgesAndNodes(res.body.data.products));
+// }
+
+async function getEmptyArray() {
+  const emptyArray = await Promise.resolve([]);
+  return emptyArray;
+}
+
 export async function getProducts({
   query,
   reverse,
@@ -382,15 +417,5 @@ export async function getProducts({
   reverse?: boolean;
   sortKey?: string;
 }): Promise<Product[]> {
-  const res = await shopifyFetch<ShopifyProductsOperation>({
-    query: getProductsQuery,
-    tags: [TAGS.products],
-    variables: {
-      query,
-      reverse,
-      sortKey
-    }
-  });
-
-  return reshapeProducts(removeEdgesAndNodes(res.body.data.products));
+  return getEmptyArray();
 }

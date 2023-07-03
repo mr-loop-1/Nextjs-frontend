@@ -1,4 +1,4 @@
-'use client';
+// 'use client';
 
 import clsx from 'clsx';
 import { ProductOption, ProductVariant } from 'lib/shopify/types';

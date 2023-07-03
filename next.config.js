@@ -17,4 +17,20 @@ module.exports = {
       }
     ]
   }
+  // reactStrictMode: true,
+  // webpack: (config) => {
+  //   config.resolve = {
+  //     ...config.resolve,
+  //     fallback: {
+  //       fs: false
+  //     }
+  //   };
+  //   return config;
+  // }
+  // webpack5: true,
+  // webpack: (config) => {
+  //   config.resolve.fallback = { fs: false, os: false, https: false, http: false };
+
+  //   return config;
+  // }
 };
