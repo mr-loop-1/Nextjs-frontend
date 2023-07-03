@@ -2,6 +2,7 @@ import Grid from 'components/grid';
 import ProductGridItems from 'components/layout/product-grid-items';
 import { defaultSort, sorting } from 'lib/constants';
 import { getProducts } from 'lib/shopify';
+import { getAllFilesFrontMatter } from 'lib/mdx/mdx';
 
 export const runtime = 'edge';
 
@@ -10,15 +11,23 @@ export const metadata = {
   description: 'Search for products in the store.'
 };
 
+export async function getStaticProps() {
+  const posts = await getAllFilesFrontMatter('blog');
+  console.log('🚀 ~ file: page.tsx:20 ~ posts:', posts);
+}
+
 export default async function SearchPage({
   searchParams
 }: {
   searchParams?: { [key: string]: string | string[] | undefined };
 }) {
+  console.log('\n', '\n', '--------------------------', '\n', '\n');
+
   const { sort, q: searchValue } = searchParams as { [key: string]: string };
   const { sortKey, reverse } = sorting.find((item) => item.slug === sort) || defaultSort;
 
-  const products = await getProducts({ sortKey, reverse, query: searchValue });
+  // const products = await getProducts({ sortKey, reverse, query: searchValue });
+  const products: any[] = [];
   const resultsText = products.length > 1 ? 'results' : 'result';
 
   return (
