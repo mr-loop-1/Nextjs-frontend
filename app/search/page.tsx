@@ -39,3 +39,6 @@ export default async function SearchPage({
     </>
   );
 }
+/**
+ * Adding a HOOK here that this is the file where pagination, page, perPage and paginate
+ */
