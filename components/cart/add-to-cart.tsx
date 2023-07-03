@@ -1,4 +1,4 @@
-'use client';
+// 'use client';
 
 import clsx from 'clsx';
 import { addItem } from 'components/cart/actions';
